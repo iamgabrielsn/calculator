@@ -1,0 +1,52 @@
+<!DOCTYPEhtml>
+<html>
+<head>
+  <title>Calculator</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <link rel="stylesheet" type="text/css" href="styles/reset.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500&display=swap"> 
+  <link rel="stylesheet" type="text/css" href="styles/styles.css">
+
+</head>
+<body>
+  <main>
+
+    <section id="display">
+      <p id="status" class="hide">Press C to clear all</p>
+      <p id="content"></p>
+      <p id="last-result" class="hide">Last result: 1000</p>
+    </section>
+
+    <section id="additional-operators">
+      <button data-action-type="c" class="item two row">C</button>
+      <button data-action-type="^" >^</button>
+    </section>
+
+    <section id="numbers">
+      <button data-action-type="9" >9</button>
+      <button data-action-type="8" >8</button>
+      <button data-action-type="7" >7</button>
+      <button data-action-type="6" >6</button>
+      <button data-action-type="5" >5</button>
+      <button data-action-type="4" >4</button>
+      <button data-action-type="1" >1</button>
+      <button data-action-type="2" >2</button>
+      <button data-action-type="3" >3</button>
+      <button data-action-type="0"  class="item two column">0</button>
+      <button data-action-type="." >.</button>
+    </section>
+
+    <section id="operators">
+      <button data-action-type="/" >/</button>
+      <button data-action-type="*" >*</button>
+      <button data-action-type="-" >-</button>
+      <button data-action-type="+" >+</button>
+      <button data-action-type="="  class="item bg-dutch-white">=</button>
+    </section>
+  </main>
+
+  <script type="text/javascript" src="scripts/scripts.js"></script>
+</body>
+</html>

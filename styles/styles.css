@@ -1,0 +1,145 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Source Code Pro', monospace;
+}
+
+html, body{
+  display: grid;
+  height: 100%;
+}
+
+body{
+  font-size: calc(0.5rem + ((1vw - 0.01px) * 2.9703));
+}
+
+main {
+  display: grid;
+  grid-template-areas: 
+  "display display display display"
+  "additional additional additional expressions"
+  "number number number expressions";
+
+  /*  base: 350px;*/
+  width: calc(21.875rem + ((1vw - 0.01px) * 0));
+  min-height: 0vw;
+
+  border-radius: 1.2rem 1.2rem 0 0;
+  margin: auto;
+  box-shadow: 0.8rem 0.8rem 1.8rem 0 #F2DEBB;
+  background-color: gray;
+}
+
+#display {
+  grid-area: display;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  justify-items: end;
+
+  border-radius: 1.2rem 1.2rem 0 0;
+  padding: 0.1rem 0;
+  height: 5rem;
+
+  background-color: #F2DEBB;
+}
+
+#additional-operators {
+  grid-area: additional;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+#numbers {
+  grid-area: number;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#numbers .item.two.column {
+  grid-column: 1/3;
+}
+
+#operators {
+  grid-area: expressions;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+}
+
+button {
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
+  height: 4.07rem;
+
+  cursor: pointer;
+  transition: background-color 0.125s ease-out;
+
+  color: #454D5C;
+  background-color: #F2ECE1;
+}
+
+#numbers button {
+  height: 4.07rem;
+}
+
+#operators button {
+  background-color: #D1B584;
+}
+
+button:hover {
+  background-color: #D1B584 !important;
+}
+
+#operators button:hover {
+  background-color: #F2ECE1 !important;
+}
+
+#operators button:active, button:active {
+  background-color: #E2D1B3 !important;
+}
+
+@media (pointer: coarse) {
+  #operators button:focus, button:focus {
+    background-color: #E2D1B3 !important;
+  }
+}
+
+#additional-operators button[data-action-type="c"]:active {
+  transition: background-color 0.5s ease-out !important;
+}
+
+#display p {
+  max-width: 100%;
+  color: #454D5C;
+  text-overflow: "";
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#content {
+  font-size: 1.5rem;
+  margin: 0.8rem 0;
+}
+
+#last-result, #status {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-variant: small-caps;
+  transition: transform 0.2s ease-out;
+}
+
+.hide {
+  transform: scale(0);
+}
+
+.bg-light-blue {
+  background-color: #91B5F2 !important;
+}
+
+.bg-belge {
+  background-color: #D1B584 !important;
+}
+
+.bg-dutch-white{
+  background-color: #F2DEBB !important;
+}
