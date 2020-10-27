@@ -20,8 +20,6 @@ function power(base, expoent) {
 }
 
 function fixBrokenNumber(number) {
-  let str = String(number);
-
   return Math.round(number*100)/100;
 }
 
@@ -34,7 +32,6 @@ function catchNumber(event, target = null) {
   if(number == null) return;
 
   if(actualOperation.number == '' && operations.length == 0) {
-    disableLastResult();
     sendInputStatus(null, true);
   }
 
@@ -145,8 +142,13 @@ function clearCalc(event, target = null) {
   if(target.tagName.toUpperCase() != "BUTTON") return;
   let operator = target.getAttribute("data-action-type");
 
-   if(operator == null || operator != "c") return;
-  
+  if(operator == null || operator != "c") return;
+
+  if(actualOperation.number == '' && operations.length == 0) {
+    clearAllContent();
+    return;
+  }
+
   if(event != null) {
 
     if(event.type == "mousedown") {
@@ -292,9 +294,13 @@ function sendInputStatus(input, clear = false, subtract = false) {
   calcContent.textContent += input;
 }
 
+let lastResultTimerID;
 function sendLastResult(result) {
   calcLastResult.textContent = `Last result: ${result}`;
   calcLastResult.classList.remove("hide");
+  
+  if(lastResultTimerID != null) clearTimeout(lastResultTimerID);
+  lastResultTimerID = setTimeout(() => calcLastResult.classList.add("hide"), 10000);
 }
 
 function disableLastResult() {
