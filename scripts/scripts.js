@@ -1,3 +1,21 @@
+let numbersContainer = document.getElementById("numbers");
+let operatorsContainer = document.getElementById("operators");
+let additionalOperatorsContainer = document.getElementById("additional-operators");
+
+let calcDisplay = document.getElementById("display");
+let calcStatus = document.getElementById("status");
+let calcContent = document.getElementById("content");
+let calcLastResult = document.getElementById("last-result");
+
+numbersContainer.addEventListener("click", catchNumber, false);
+operatorsContainer.addEventListener("click", catchOperator, false);
+additionalOperatorsContainer.addEventListener("click", catchOperator, false);
+additionalOperatorsContainer.addEventListener("mousedown", clearCalc, false);
+additionalOperatorsContainer.addEventListener("mouseup", clearCalc, false);
+window.addEventListener("keydown", catchKey, false);
+
+let operations = [];
+let actualOperation = getNewOperation();
 
 function add(num1, num2) {
   return num1 + num2;
@@ -24,11 +42,7 @@ function fixBrokenNumber(number) {
 }
 
 function catchNumber(event, target = null) {
-  if(target === null) {
-    target = event.target;
-  }
-  if(target.tagName.toUpperCase() != "BUTTON") return;
-  let number = target.getAttribute("data-action-type");
+  let number = getElementContent(event, target);
   if(number == null) return;
 
   if(actualOperation.number == '' && operations.length == 0) {
@@ -63,11 +77,7 @@ function catchNumber(event, target = null) {
 
 
 function catchOperator(event, target = null) {
-  if(target === null) {
-    target = event.target;
-  }
-  if(target.tagName.toUpperCase() != "BUTTON") return;
-  let operator = target.getAttribute("data-action-type");
+  let operator = getElementContent(event, target);
 
   if(operator == null || operator == "c") {
     return;
@@ -135,12 +145,7 @@ function showCalcResult() {
 
 let clearAll_TimeStart = 0;
 function clearCalc(event, target = null) {
-  if(target === null) {
-    target = event.target;
-  }
-
-  if(target.tagName.toUpperCase() != "BUTTON") return;
-  let operator = target.getAttribute("data-action-type");
+  let operator = getElementContent(event, target);
 
   if(operator == null || operator != "c") return;
 
@@ -158,14 +163,15 @@ function clearCalc(event, target = null) {
     }
 
     if(event.type == "mouseup") {
+
       let timeDiff = Date.now() - clearAll_TimeStart;
-      if(timeDiff >= 500 ) { 
+
+      if(timeDiff >= 500 )
         clearAllContent();
-        clearAll_TimeStart = 0;
-      }else{
+      else
         clearOne();
-        clearAll_TimeStart = 0;
-      }
+      
+      clearAll_TimeStart = 0;
       return;
     }
   } else {
@@ -270,6 +276,18 @@ function getNewOperation(number = '', operator = undefined) {
   return {number, operator};
 }
 
+function getElement(actionType) {
+  return document.querySelector(actionType);
+}
+
+function getElementContent(event, target = null) {
+  if(target === null) 
+    target = event.target;
+  
+  if(target.tagName.toUpperCase() != "BUTTON") return null;
+  return target.getAttribute("data-action-type");
+}
+
 let statusTimerID;
 function sendMessage(message) {
   calcStatus.textContent = message;
@@ -292,6 +310,11 @@ function sendInputStatus(input, clear = false, subtract = false) {
   }
 
   calcContent.textContent += input;
+
+  if(calcContent.textContent.length > 0 && calcContent.offsetWidth >= calcDisplay.offsetWidth) {
+    let text = calcContent.textContent;
+    calcContent.textContent = text.substring(1, text.length);
+  }
 }
 
 let lastResultTimerID;
@@ -306,25 +329,3 @@ function sendLastResult(result) {
 function disableLastResult() {
   calcLastResult.classList.add("hide");
 }
-
-function getElement(actionType) {
-  return document.querySelector(actionType);
-}
-
-let numbersContainer = document.getElementById("numbers");
-let operatorsContainer = document.getElementById("operators");
-let additionalOperatorsContainer = document.getElementById("additional-operators");
-
-let calcStatus = document.getElementById("status");
-let calcContent = document.getElementById("content");
-let calcLastResult = document.getElementById("last-result");
-
-numbersContainer.addEventListener("click", catchNumber, false);
-operatorsContainer.addEventListener("click", catchOperator, false);
-additionalOperatorsContainer.addEventListener("click", catchOperator, false);
-additionalOperatorsContainer.addEventListener("mousedown", clearCalc, false);
-additionalOperatorsContainer.addEventListener("mouseup", clearCalc, false);
-window.addEventListener("keydown", catchKey, false);
-
-let operations = [];
-let actualOperation = getNewOperation();
